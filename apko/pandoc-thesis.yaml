@@ -1,0 +1,19 @@
+---
+contents:
+  repositories:
+    - https://dl-cdn.alpinelinux.org/alpine/edge/main
+    - https://dl-cdn.alpinelinux.org/alpine/edge/community
+  packages:
+    - ca-certificates-bundle
+    - curl
+    - pandoc
+    - texlive
+
+environment:
+  PATH: /usr/sbin:/sbin:/usr/bin:/bin
+
+work-dir: /pandoc_thesis
+cmd: /bin/sh -l
+
+archs:
+  - amd64
