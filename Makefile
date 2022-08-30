@@ -3,6 +3,14 @@
 ## Setup (public)
 ###############################################################################
 
+## pandoc-thesis official image
+## Verify its signature before run `make container` ;)
+OCI = ghcr.io/andros21/pandoc-thesis:master
+
+## Container engine to use
+## Choose between docker or podman (rootless)
+CE = $$(type -p docker 2>/dev/null || type -p podman 2>/dev/null)
+
 
 ## Working directory
 ## In case this doesn't work, set the path manually (use absolute paths).
@@ -10,10 +18,10 @@ WORKDIR                 = $(CURDIR)
 
 
 ## Pandoc
-## (Defaults to docker. To use pandoc and TeX-Live directly, create an
+## (Defaults to docker/podman. To use pandoc and TeX-Live directly, create an
 ## environment variable `PANDOC` pointing to the location of your
 ## pandoc installation.)
-PANDOC                 ?= docker run --rm -v $(WORKDIR):/pandoc pandoc-thesis pandoc
+PANDOC                 ?= $(CE) exec pandoc-thesis pandoc
 
 
 ## Source files
@@ -154,9 +162,13 @@ cleanthesis: OPTIONS          += --include-in-header=include-header.tex $(AUX_OP
 cleanthesis: $(CLEANTHESIS_TEMPLATE) $(TARGET)
 
 
-## Build docker image ("pandoc-thesis") containing pandoc and TeX-Live
-docker:
-	cd docker && make
+## Pull, run and setup "pandoc-thesis" image containing pandoc and TeX-Live
+container:
+	$(CE) run -it --detach --name pandoc-thesis -v $(WORKDIR):/pandoc_thesis:Z $(OCI)
+	$(CE) exec pandoc-thesis \
+		curl https://git.alpinelinux.org/aports/plain/community/texlive/texlive.trigger \
+		--output /tmp/texlive.trigger.sh
+	$(CE) exec pandoc-thesis sh /tmp/texlive.trigger.sh
 
 
 ## Clean-up: Remove temporary (generated) files and download folder
@@ -168,6 +180,14 @@ clean:
 distclean: clean
 	rm -f $(TARGET) $(TEMPLATE_FILES)
 
+## Clean-up: Stop and remove "pandoc-thesis" container
+containerclean:
+	$(CE) stop pandoc-thesis
+	$(CE) rm pandoc-thesis
+
+## Clean-up: Remove "pandoc-thesis" image
+imageclean:
+	$(CE) rmi $(OCI)
 
 
 
@@ -204,4 +224,4 @@ $(TMP): __%.filled.tex: %.tex $(META)
 ###############################################################################
 
 
-.PHONY: simple eisvogel cleanthesis docker clean distclean
+.PHONY: simple eisvogel cleanthesis container clean distclean containerclean imageclean
