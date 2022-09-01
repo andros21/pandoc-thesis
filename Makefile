@@ -70,7 +70,7 @@ OPTIONS                 = -f markdown
 OPTIONS                += --pdf-engine=pdflatex
 OPTIONS                += --standalone
 
-OPTIONS                += -M lang=de-DE
+OPTIONS                += -M lang=en-EN
 OPTIONS                += --metadata-file=$(META)
 OPTIONS                += --filter pandoc-imagine
 
@@ -90,7 +90,7 @@ OPTIONS                += -M link-citations=true
 
 OPTIONS                += --listings
 
-OPTIONS                += -V documentclass=scrbook
+OPTIONS                += -V documentclass=book
 OPTIONS                += -V papersize=a4
 OPTIONS                += -V fontsize=11pt
 
@@ -109,7 +109,9 @@ OPTIONS                += --toc
 OPTIONS                += --toc-depth=3
 OPTIONS                += --number-sections
 
-OPTIONS                += -V colorlinks=true
+OPTIONS                += -V citecolor=darkred
+OPTIONS                += -V linkcolor=darkred
+OPTIONS                += -V urlcolor=darkblue
 
 ## Eisvogel (do not change!)
 ## https://github.com/Wandmalfarbe/pandoc-latex-template
