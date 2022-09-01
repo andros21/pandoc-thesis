@@ -9,19 +9,13 @@ $endif$
 
 
 %------------------------------------- Custom Abstract Page ------------------------
-$if(abstract-de)$
+$if(abstractt)$
 \cleardoublepage
 \begin{minipage}{\linewidth}
 
-\chapter*{Zusammenfassung}
-%\addcontentsline{toc}{chapter}{Zusammenfassung}
-$abstract-de$
-
-$if(abstract-en)$
-\chapter*{Abstract}
-%\addcontentsline{toc}{chapter}{Abstract}
-$abstract-en$
-$endif$
+	\chapter*{$abstractlabel$}
+	%\addcontentsline{toc}{chapter}{Abstract}
+	$abstractt$
 
 \end{minipage}
 \cleardoublepage
@@ -32,8 +26,8 @@ $endif$
 
 %------------------------------------- Acknowledgements Page -----------------------
 $if(acknowledgements)$
-\chapter*{Danksagung}
-%\addcontentsline{toc}{chapter}{Danksagung}
+\chapter*{$acknowledgementslabel$}
+%\addcontentsline{toc}{chapter}{Acknowledgements}
 $acknowledgements$
 $endif$
 %------------------------------------- Acknowledgements Page -----------------------
@@ -42,7 +36,7 @@ $endif$
 
 %------------------------------------- Restriction Note Page -----------------------
 $if(restrictionnote)$
-\chapter*{Sperrvermerk}
+\chapter*{$restrictionnotelabel$}
 $restrictionnote$
 $endif$
 %------------------------------------- Restriction Note Page -----------------------
@@ -55,18 +49,28 @@ $endif$
 
 
 
-%------------------------------------- Use Eisvogel Header/Footer ------------------
+%------------------------------------- Header/Footer ------------------
 $if(eisvogel)$
 $if(headeralternative)$
-    \newpairofpagestyles{headeralternative}{
-        \clearpairofpagestyles
-        \automark[section]{chapter}
-        \ihead[\headmark]{}
-        \ohead[]{\headmark}
-        \ifoot[\pagemark]{$author$}
-        \ofoot[$author$]{\pagemark}
-    }
-    \pagestyle{headeralternative}
+\newpairofpagestyles{headeralternative}{
+	\clearpairofpagestyles
+	\automark[section]{chapter}
+	\ihead[\headmark]{}
+	\ohead[]{\headmark}
+	\ifoot[\pagemark]{$author$}
+	\ofoot[$author$]{\pagemark}
+}
+\pagestyle{headeralternative}
 $endif$
+$else$
+\newpairofpagestyles{simple}{
+	\clearpairofpagestyles
+	\automark[chapter]{chapter}
+	\ihead{\headmark}
+	\ohead[\pagemark]{\pagemark}
+	\automark*[section]{}
+}
+\pagestyle{simple}
+\KOMAoption{headsepline}{true}
 $endif$
-%------------------------------------- Use Eisvogel Header/Footer ------------------
+%------------------------------------- Header/Footer ------------------
