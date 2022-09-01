@@ -1,52 +1,84 @@
+\RequirePackage[markcase=used]{scrlayer-scrpage}
+
+%------------------------------------- Custom Color Setup --------------------------
+\colorlet{darkred}{red!50!black}
+\colorlet{darkblue}{blue!50!black}
+%------------------------------------- Custom Color Setup --------------------------
 
 %------------------------------------- Custom Title Page ---------------------------
 \renewcommand{\maketitle}{
-\thispagestyle{empty}
+	\thispagestyle{empty}
 
-\parindent=0pt
-\begin{center}
-    \Large
-    \textsc{
-        Fachhochschule Bielefeld\\
-        Fachbereich Campus Minden\\
-        \vspace{\baselineskip}\noindent
-        Studiengang Informatik
-    }
-\end{center}
+	\parindent=0pt
+	\begin{center}
+		\begin{figure}[t]
+			\centering
+			\includegraphics{figs/marks/$markname$}
+		\end{figure}
+	\end{center}
 
-\vspace{20mm}
-\hrule
-\vspace{5mm}
 
-\begin{center}
-    \LARGE
-    \textbf{\textsc{ $title$ }}
-\end{center}
+	\vspace{20mm}
+	\hrule
+	\vspace{5mm}
 
-\vspace{5mm}
-\hrule
-\vspace{10mm}
+	\begin{center}
+		\LARGE
+		\textbf{\textsc{$title$}}
+	\end{center}
 
-$if(subtitle)$
-\begin{center}
-    \Large
-    \textsc{ $subtitle$ }
-\end{center}
-$endif$
+	\vspace{5mm}
+	\hrule
+	\vspace{10mm}
 
-\vfill
+	$if(subtitle)$
+	\begin{center}
+		\Large
+		\textsc{$subtitle$}
+	\end{center}
+	\vspace{30mm}
+	$else$
+	\vspace{20mm}
+	$endif$
 
-\vspace{\baselineskip}\noindent
-\large
-\begin{tabular}{lp{\textwidth}}
-    vorgelegt von: & \texttt{$for(author)$$author$$sep$ \and $endfor$}\\
-    Matrikelnummer: & \texttt{$studentnumber$} \\
-    &\\[12pt]
-    Abgabe am: & \texttt{$date$}\\
-    &\\[24pt]
-    Erstprüfer/in: & \texttt{$reviewer1$}\\
-    Zweitprüfer/in: & \texttt{$reviewer2$}
-\end{tabular}
+	\begin{center}
+		\begin{minipage}[t]{0.4\textwidth}
+			\begin{flushleft} \large
+				\emph{$authorlabel$} \\
+				\textcolor{darkred}{$authorname$ \textsc{$authorsurname$}} \\
+				$authormatr$
+			\end{flushleft}
+		\end{minipage}
+		\begin{minipage}[t]{0.4\textwidth}
+			\begin{flushright} \large
+				\emph{$supervisorlabel1$} \\
+				\textcolor{darkred}{$supervisorname1$ \textsc{$supervisorsurname1$}}
+				\\\vspace{2mm}
+				\emph{$supervisorlabel2$} \\
+				\textcolor{darkred}{$supervisorname2$ \textsc{$supervisorsurname2$}}
+			\end{flushright}
+		\end{minipage}
+	\end{center}
+
+	\vspace{40mm}
+	\begin{center}
+		$if(faculty)$
+		\textsc{$faculty$} \\
+		$endif$
+		$if(department)$
+		\textsc{$department$} \\
+		$endif$
+		$if(university)$
+		\textsc{$university$} \\
+		$endif$
+		$if(groupname)$
+		\textsc{$groupname$} \\
+		$endif$
+		\vspace{7mm}
+		\textsc{A.A. $accademicyear$}
+	\end{center}
+
+	\vfill
 }
 %------------------------------------- Custom Title Page ---------------------------
 
@@ -54,14 +86,14 @@ $endif$
 
 %------------------------------------- Custom Title (Back) Page --------------------
 \newcommand\customtitlebackpage{
-\thispagestyle{empty}
-\hfill
-\vfill
-\textbf{$author$} ($studentnumber$) \\
-\textit{$title$} \\
-$date$ \\[12pt]
-Erstprüfer/in: $reviewer1$ \\
-Zweitprüfer/in: $reviewer2$
+	\thispagestyle{empty}
+	\hfill
+	\vfill
+	\textbf{$author$} ($studentnumber$) \\
+	\textit{$title$} \\
+	$date$ \\[12pt]
+	Erstprüfer/in: $reviewer1$ \\
+	Zweitprüfer/in: $reviewer2$
 }
 %------------------------------------- Custom Title (Back) Page --------------------
 
@@ -86,10 +118,10 @@ $endif$
 %% So we need to set it appropriately using our metadata variable "cleanthesisbibfile"
 $if(cleanthesis)$
 \PassOptionsToPackage{
-    figuresep=colon,
-    configurelistings=true,
-    configurebiblatex=false,
-    bibfile=$cleanthesisbibfile$
+	figuresep=colon,
+	configurelistings=true,
+	configurebiblatex=false,
+	bibfile=$cleanthesisbibfile$
 }{cleanthesis}
 $endif$
 %------------------------------------- Workaround for CleanStyle -------------------

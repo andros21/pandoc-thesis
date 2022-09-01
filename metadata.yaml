@@ -1,57 +1,55 @@
 ---
-## mandatory (subtitle and header-left are optional)
+## commented field are optionals
+
+# water-mark file name
+markname: usm-ph
+
 title: "Title of my Thesis"
-#subtitle: "From Markdown to LaTeX to PDF"
-author: "Surname Name"
-keywords: [Markdown, Example]
+# subtitle: "Subtitle of my Thesis"
 
-### really long titles may require (multiple) line break(s) in page headers when using Eisvogel
-### activate (i.e. uncomment the next line) "header-left" to define a shortened single-line version of your long title to be used in page headers
-#header-left: "Shortened version of title for running page headers ..."
-### (note to myself: "header-left" is a meta-data variable in the Eisvogel template)
+authorlabel: "Author:"
+authorname: "name"
+authorsurname: "surname"
+supervisorlabel1: "Supervisor 1:"
+supervisorname1: "name"
+supervisorsurname1: "surname"
+supervisorlabel2: "Supervisor 2:"
+supervisorname2: "name"
+supervisorsurname2: "surname"
+authormatr: "000000"
 
-### activate (i.e. uncomment the next line) "headeralternative" to use chapter/section in header instead of title
-headeralternative: true
+# faculty: "faculty"
+# university: "university"
+# department: "department"
+# groupname: "groupname"
+accademicyear: "0000-0000"
 
-studentnumber: "12345678"
-date: "20. Juli 2019"
+abstractlabel: Abstract
+# abstractt: |
 
-reviewer1:  "XXX, FH Bielefeld"
-reviewer2:  "XXX, Wuppie GmbH"
+acknowledgementslabel: Acknowledgements
+# acknowledgements: |
+#
 
+restrictionnotelabel: Restriction Note
+# restrictionnote: |
+#
 
-## optional (mandatory, if english abstract enabled)
-abstract-de: |
-  Dies ist die Zusammenfassung auf Deutsch.
+declarationlabel: Declaration
+# declaration: |
+#
 
+# pdf keywords metadata
+keywords: []
 
-## optional
-abstract-en: |
-  This is an english abstract.
+## really long titles may require (multiple) line break(s)
+## in page headers when using Eisvogel activate (i.e. uncomment the next line)
+## "header-left" to define a shortened single-line version
+## of your long title to be used in page headers
+# header-left: "Shortened version of title for running page headers ..."
 
+# activate (i.e. uncomment the next line) "headeralternative"
+# to use chapter/section in header instead of title, in Eisvogel template
+headeralternative: false
 
-## optional
-acknowledgements: |
-  Hier kommt die Danksagung hin.
-
-
-## optional
-restrictionnote: |
-  Die vorliegende Arbeit enthält vertrauliche Daten der Firma XYZ. Veröffentlichungen
-  oder Vervielfältigungen der Arbeit -- auch nur auszugsweise -- sind ohne ausdrückliche
-  Genehmigung des beteiligten Unternehmens nicht gestattet.
-
-  Die Arbeit ist nur den Prüfern bzw. den Korrektoren sowie den Mitgliedern des
-  Prüfungsausschusses bzw. der oder dem Prüfungsbeauftragten zugänglich zu machen.
-
-
-## mandatory
-declaration: |
-  Ich erkläre hiermit an Eides Statt, dass ich die vorliegende Arbeit selbstständig
-  angefertigt habe. Die aus fremden Quellen direkt oder indirekt übernommenen Gedanken
-  sind als entsprechend kenntlich gemacht.
-
-  Ich habe die Arbeit bisher weder in gleicher noch in ähnlicher Form einer anderen
-  Prüfungsbehörde vorgelegt und auch noch nicht veröffentlicht. Das PDF-Exemplar stimmt
-  mit den eingereichten Exemplaren überein.
----
+...
