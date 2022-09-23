@@ -191,6 +191,10 @@ container:
 	$(CE) exec -w / pandoc-thesis rm -fr .cache
 
 
+## Upgrade "pandoc-thesis" image and setup new container
+containerupgrade: containerclean imageclean container
+
+
 ## Clean-up: Remove temporary (generated) files and download folder
 clean:
 	rm -rf $(TMP) $(TEMPLATE_DL_DIR)
