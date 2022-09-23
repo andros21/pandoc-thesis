@@ -113,3 +113,63 @@ bzw. [pandoc.org/lua-filters.html](https://pandoc.org/lua-filters.html)] einsetz
 Das generierte PDF ist für den **doppelseitigen** Ausdruck gedacht. Wie bei einem Buch fangen neue Kapitel
 immer auf einer neuen rechten Seite an, d.h. es kann passieren, dass am Ende eines Kapitels ggf. eine leere
 Seite erzeugt wird. Dies ist durchaus beabsichtigt.
+
+\newpage
+
+# Let's test pandoc-filters
+
+## Gnuplot
+
+Digital display exbibit a non linear emission behaviour, in relation to characteristic parameter $\gamma$,
+see \ref{fig:gamma}:
+
+```{.gnuplot im_fmt="tex" im_out="img" caption="Different emission responses" label="fig:gamma"}
+set terminal epslatex
+set xlabel "Normalized input"
+set ylabel "Normalized output"
+set key left top
+set format '$%g$'
+plot [0:1] x with lines t '$\gamma = 1.0$' lt rgb "#ad3434" lw 3, \
+           x**1.6 with lines t '$\gamma = 1.6$' lt rgb "#34ad34" lw 3, \
+           x**2.2 with lines t '$\gamma = 2.2$' lt rgb "#3434ad" lw 3
+```
+
+## Graphviz
+
+Internally a generic compiler can be viewed as \ref{fig:compiler}
+
+```{.graphviz im_fmt="eps" im_out="img" caption="General compiler pipe" #fig:compiler}
+graph "" {
+    rankdir="LR";
+    source [label="source code" shape=ellipse];
+    lexer [label="lexer" shape=box];
+    parser [label="parser" shape=box];
+    AST [label="AST builder" shape=box];
+    optimizer [label="optimizer" shape=box];
+    executable [label="executable" shape=ellipse];
+
+    source -- lexer;
+    lexer -- parser;
+    parser -- AST;
+    AST -- optimizer;
+    optimizer -- executable;
+}
+```
+
+
+## Plantuml
+
+Two web apps behind a dmz see \ref{fig:dmz}
+
+```{.plantuml im_fmt="eps" im_out="img" caption="web01 backend web02 frontend" #fig:dmz}
+@startuml
+nwdiag {
+  network dmz {
+      address = "210.x.x.x/24"
+
+      web01 [address = "210.x.x.1"];
+      web02 [address = "210.x.x.2"];
+  }
+}
+@enduml
+```
