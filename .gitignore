@@ -258,3 +258,5 @@ cleanthesis.sty
 # Generated PDF artifact
 thesis.pdf
 
+# Generated pd-images
+pd-images/
