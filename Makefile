@@ -7,6 +7,7 @@
 ## Verify its signature before run `make container` ;)
 OCI = ghcr.io/andros21/pandoc-thesis:master
 
+
 ## Container engine to use
 ## Choose between docker or podman (rootless)
 CE = $$(type -p docker 2>/dev/null || type -p podman 2>/dev/null)
@@ -71,6 +72,7 @@ OPTIONS                += --standalone
 
 OPTIONS                += -M lang=de-DE
 OPTIONS                += --metadata-file=$(META)
+OPTIONS                += --filter pandoc-imagine
 
 OPTIONS                += --include-in-header=$(TMP1)
 OPTIONS                += --include-before-body=$(TMP2)
@@ -130,6 +132,18 @@ CLEANTHESIS_VERSION     = 63d1fdd815
 TEMPLATE_FILES          = $(EISVOGEL_TEMPLATE) $(CLEANTHESIS_TEMPLATE)
 
 
+## Container script/repo setup variables
+TEXLIVE_TRIGGER_URL     = https://git.alpinelinux.org/aports/plain/community/texlive/texlive.trigger
+TEXLIVE_TRIGGER         = /tmp/texlive.trigger.sh
+
+JAVA_TRIGGER_URL        = https://git.alpinelinux.org/aports/plain/community/java-common/java-common.trigger
+JAVA_TRIGGER            = /tmp/java.trigger.sh
+
+PANDOC_FILTERS_REPO     = https://github.com/jgm/pandocfilters.git
+PANDOC_FILTERS_VERSION  = 1beda668a764c8aa8e1c4e0cebce4323d4181f92
+
+PANDOC_IMAGINE_REPO     = https://github.com/andros21/imagine
+PANDOC_IMAGINE_VERSION  = dea560e1da35b1590b07ad5bcdb08535199e61dd
 
 
 
@@ -165,10 +179,16 @@ cleanthesis: $(CLEANTHESIS_TEMPLATE) $(TARGET)
 ## Pull, run and setup "pandoc-thesis" image containing pandoc and TeX-Live
 container:
 	$(CE) run -it --detach --name pandoc-thesis -v $(WORKDIR):/pandoc_thesis:Z $(OCI)
-	$(CE) exec pandoc-thesis \
-		curl https://git.alpinelinux.org/aports/plain/community/texlive/texlive.trigger \
-		--output /tmp/texlive.trigger.sh
-	$(CE) exec pandoc-thesis sh /tmp/texlive.trigger.sh
+	$(CE) exec -w / pandoc-thesis curl -sSf $(TEXLIVE_TRIGGER_URL) --output $(TEXLIVE_TRIGGER)
+	$(CE) exec -w / pandoc-thesis curl -sSf $(JAVA_TRIGGER_URL) --output $(JAVA_TRIGGER)
+	$(CE) exec -w / pandoc-thesis sh /tmp/texlive.trigger.sh
+	$(CE) exec -w / pandoc-thesis dot -c
+	$(CE) exec -w / pandoc-thesis sh /tmp/java.trigger.sh
+	$(CE) exec -w / pandoc-thesis python3 -m pip install --root-user-action=ignore \
+		git+$(PANDOC_FILTERS_REPO)@$(PANDOC_FILTERS_VERSION)
+	$(CE) exec -w / pandoc-thesis python3 -m pip install --root-user-action=ignore \
+		git+$(PANDOC_IMAGINE_REPO)@$(PANDOC_IMAGINE_VERSION)
+	$(CE) exec -w / pandoc-thesis rm -fr .cache
 
 
 ## Clean-up: Remove temporary (generated) files and download folder
@@ -179,6 +199,7 @@ clean:
 ## Clean-up: Remove also generated thesis and template files
 distclean: clean
 	rm -f $(TARGET) $(TEMPLATE_FILES)
+	rm -fr pd-images/
 
 ## Clean-up: Stop and remove "pandoc-thesis" container
 containerclean:
