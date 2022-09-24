@@ -157,6 +157,11 @@ container:
 	$(CE) exec -w / pandoc-thesis rm -fr .cache
 
 
+## Open thesis after build it
+thesis: simple
+	xdg-open ${TARGET} >/dev/null 2>&1 &
+
+
 ## Upgrade "pandoc-thesis" image and setup new container
 containerupgrade: containerclean imageclean container
 
