@@ -203,7 +203,7 @@ clean:
 ## Clean-up: Remove also generated thesis and template files
 distclean: clean
 	rm -f $(TARGET) $(TEMPLATE_FILES)
-	rm -fr pd-images/
+	rm -fr pd-images/ \?/
 
 ## Clean-up: Stop and remove "pandoc-thesis" container
 containerclean:
