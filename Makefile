@@ -27,7 +27,7 @@ PANDOC                 ?= $(CE) exec pandoc-thesis pandoc
 
 ## Source files
 ## (Adjust to your needs. Order of markdown files in $(SRC) matters!)
-META                    = md/metadata.yaml
+META                    = metadata.yaml
 
 SRC                     = md/introduction.md       \
                           md/relatedwork.md        \
@@ -35,7 +35,7 @@ SRC                     = md/introduction.md       \
                           md/realisation.md        \
                           md/conclusion.md
 
-BIBFILE                 = references.bib
+BIBFILE                 = md/references.bib
 
 APPENDIX                = md/appendix.md
 
@@ -55,11 +55,11 @@ TARGET                  = thesis.pdf
 TITLEPAGE               = titlepage.tex
 FRONTMATTER             = frontmatter.tex
 BACKMATTER              = backmatter.tex
-REFERENCES              = references.md
+REFERENCES              = tex/references.tex
 
-TMP1                    = $(TITLEPAGE:%.tex=__%.filled.tex)
-TMP2                    = $(FRONTMATTER:%.tex=__%.filled.tex)
-TMP3                    = $(BACKMATTER:%.tex=__%.filled.tex)
+TMP1                    = tex/$(TITLEPAGE:%.tex=__%.filled.tex)
+TMP2                    = tex/$(FRONTMATTER:%.tex=__%.filled.tex)
+TMP3                    = tex/$(BACKMATTER:%.tex=__%.filled.tex)
 TMP                     = $(TMP1) $(TMP2) $(TMP3)
 
 
@@ -237,7 +237,7 @@ ${TARGET}: $(SRC) $(REFERENCES) $(APPENDIX) $(META) $(BIBFILE) $(TMP)
 
 
 ## Build auxiliary files (title page, frontmatter, backmatter, references)
-$(TMP): __%.filled.tex: %.tex $(META)
+$(TMP): tex/__%.filled.tex: tex/%.tex $(META)
 	$(PANDOC) $(AUX_OPTS) --template=$< --metadata-file=$(META) -o $@ $<
 
 
