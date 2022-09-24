@@ -113,25 +113,9 @@ OPTIONS                += -V citecolor=darkred
 OPTIONS                += -V linkcolor=darkred
 OPTIONS                += -V urlcolor=darkblue
 
-## Eisvogel (do not change!)
-## https://github.com/Wandmalfarbe/pandoc-latex-template
 OPTIONS                += -V book=true
 OPTIONS                += -V titlepage=true
 OPTIONS                += -V toc-own-page=true
-
-
-## Template variables
-TEMPLATE_DL_DIR         = .tmp_template_dl
-
-EISVOGEL_TEMPLATE       = eisvogel.tex
-EISVOGEL_REPO           = https://github.com/Wandmalfarbe/pandoc-latex-template
-EISVOGEL_VERSION        = ad404d0446
-
-CLEANTHESIS_TEMPLATE    = cleanthesis.sty
-CLEANTHESIS_REPO        = https://github.com/derric/cleanthesis
-CLEANTHESIS_VERSION     = 63d1fdd815
-
-TEMPLATE_FILES          = $(EISVOGEL_TEMPLATE) $(CLEANTHESIS_TEMPLATE)
 
 
 ## Container script/repo setup variables
@@ -158,26 +142,6 @@ PANDOC_IMAGINE_VERSION  = dea560e1da35b1590b07ad5bcdb08535199e61dd
 simple: $(TARGET)
 
 
-## Use Eisvogel template (https://github.com/Wandmalfarbe/pandoc-latex-template)
-eisvogel: TEMPLATE_FILE    += $(EISVOGEL_TEMPLATE)
-eisvogel: TEMPLATE_REPO    += $(EISVOGEL_REPO)
-eisvogel: TEMPLATE_VERSION += $(EISVOGEL_VERSION)
-eisvogel: AUX_OPTS         += -M eisvogel=true
-eisvogel: OPTIONS          += --template=$(EISVOGEL_TEMPLATE) $(AUX_OPTS)
-eisvogel: OPTIONS          += -V float-placement-figure=htbp
-eisvogel: OPTIONS          += -V listings-no-page-break=true
-eisvogel: $(EISVOGEL_TEMPLATE) $(TARGET)
-
-
-## Use Clean Thesis template (https://github.com/derric/cleanthesis)
-cleanthesis: TEMPLATE_FILE    += $(CLEANTHESIS_TEMPLATE)
-cleanthesis: TEMPLATE_REPO    += $(CLEANTHESIS_REPO)
-cleanthesis: TEMPLATE_VERSION += $(CLEANTHESIS_VERSION)
-cleanthesis: AUX_OPTS         += -M cleanthesis=true -M cleanthesisbibfile=$(BIBFILE:%.bib=%)
-cleanthesis: OPTIONS          += --include-in-header=include-header.tex $(AUX_OPTS)
-cleanthesis: $(CLEANTHESIS_TEMPLATE) $(TARGET)
-
-
 ## Pull, run and setup "pandoc-thesis" image containing pandoc and TeX-Live
 container:
 	$(CE) run -it --detach --name pandoc-thesis -v $(WORKDIR):/pandoc_thesis:Z $(OCI)
@@ -197,20 +161,22 @@ container:
 containerupgrade: containerclean imageclean container
 
 
-## Clean-up: Remove temporary (generated) files and download folder
+## Clean-up: Remove temporary (generated) files
 clean:
-	rm -rf $(TMP) $(TEMPLATE_DL_DIR)
+	rm -rf $(TMP)
 
 
-## Clean-up: Remove also generated thesis and template files
+## Clean-up: Remove also generated thesis and temp files
 distclean: clean
-	rm -f $(TARGET) $(TEMPLATE_FILES)
+	rm -f $(TARGET)
 	rm -fr pd-images/ \?/
+
 
 ## Clean-up: Stop and remove "pandoc-thesis" container
 containerclean:
 	$(CE) stop pandoc-thesis
 	$(CE) rm pandoc-thesis
+
 
 ## Clean-up: Remove "pandoc-thesis" image
 imageclean:
@@ -218,19 +184,9 @@ imageclean:
 
 
 
-
 ###############################################################################
 ## Auxiliary targets (do not change)
 ###############################################################################
-
-
-## Download template files
-$(TEMPLATE_FILES):
-	rm -rf $(TEMPLATE_DL_DIR)
-	git clone --quiet --single-branch --branch master --depth 100 $(TEMPLATE_REPO) $(TEMPLATE_DL_DIR)
-	cd $(TEMPLATE_DL_DIR) && git checkout --quiet $(TEMPLATE_VERSION)
-	cp $(TEMPLATE_DL_DIR)/$(TEMPLATE_FILE) ./$(TEMPLATE_FILE)
-	rm -rf $(TEMPLATE_DL_DIR)
 
 
 ## Build thesis
@@ -251,4 +207,4 @@ $(TMP): tex/__%.filled.tex: tex/%.tex $(META)
 ###############################################################################
 
 
-.PHONY: simple eisvogel cleanthesis container clean distclean containerclean imageclean
+.PHONY: simple container clean distclean containerclean imageclean

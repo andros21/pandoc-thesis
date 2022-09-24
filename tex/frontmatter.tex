@@ -1,13 +1,4 @@
 
-%------------------------------------- Custom Title (Back) Page --------------------
-$if(cleanthesis)$
-\clearpage
-\customtitlebackpage
-$endif$
-%------------------------------------- Custom Title (Back) Page --------------------
-
-
-
 %------------------------------------- Custom Abstract Page ------------------------
 $if(abstractt)$
 \cleardoublepage
@@ -50,19 +41,6 @@ $endif$
 
 
 %------------------------------------- Header/Footer ------------------
-$if(eisvogel)$
-$if(headeralternative)$
-\newpairofpagestyles{headeralternative}{
-	\clearpairofpagestyles
-	\automark[section]{chapter}
-	\ihead[\headmark]{}
-	\ohead[]{\headmark}
-	\ifoot[\pagemark]{$author$}
-	\ofoot[$author$]{\pagemark}
-}
-\pagestyle{headeralternative}
-$endif$
-$else$
 \newpairofpagestyles{simple}{
 	\clearpairofpagestyles
 	\automark[chapter]{chapter}
@@ -72,5 +50,4 @@ $else$
 }
 \pagestyle{simple}
 \KOMAoption{headsepline}{true}
-$endif$
 %------------------------------------- Header/Footer ------------------
