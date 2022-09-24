@@ -2,7 +2,7 @@
 ## commented field are optionals
 
 # water-mark file name
-markname: usm-ph
+markname: figs/marks/usm-ph.png
 
 title: "Title of my Thesis"
 # subtitle: "Subtitle of my Thesis"
