@@ -124,14 +124,14 @@ Digital display exbibit a non linear emission behaviour, in relation to characte
 see \ref{fig:gamma}:
 
 ```{.gnuplot im_fmt="tex" im_out="img" caption="Different emission responses" label="fig:gamma"}
-set terminal epslatex
-set xlabel "Normalized input"
-set ylabel "Normalized output"
+set size 0.8,0.8
 set key left top
 set format '$%g$'
-plot [0:1] x with lines t '$\gamma = 1.0$' lt rgb "#ad3434" lw 3, \
-           x**1.6 with lines t '$\gamma = 1.6$' lt rgb "#34ad34" lw 3, \
-           x**2.2 with lines t '$\gamma = 2.2$' lt rgb "#3434ad" lw 3
+set xlabel "Normalized input"
+set ylabel "Normalized output"
+plot [0:1] x with lines t '$\gamma = 1.0$' lt rgb "#ad3434" lw 3.5, \
+           x**1.6 with lines t '$\gamma = 1.6$' lt rgb "#34ad34" lw 3.5, \
+           x**2.2 with lines t '$\gamma = 2.2$' lt rgb "#3434ad" lw 3.5
 ```
 
 ## Graphviz
