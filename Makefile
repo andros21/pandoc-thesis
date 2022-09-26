@@ -139,7 +139,7 @@ PANDOC_IMAGINE_VERSION  = dea560e1da35b1590b07ad5bcdb08535199e61dd
 
 
 ## Simple book layout
-simple: $(TARGET)
+simple: containerstart $(TARGET)
 
 
 ## Pull, run and setup "pandoc-thesis" image containing pandoc and TeX-Live
@@ -160,6 +160,12 @@ container:
 ## Open thesis after build it
 thesis: simple
 	xdg-open ${TARGET} >/dev/null 2>&1 &
+
+
+## Start container or advice to setup it
+containerstart:
+	@$(CE) start pandoc-thesis 2> /dev/null \
+		|| (printf 'Error: no container `pandoc-thesis` found, run `make container` before\n' && exit 1)
 
 
 ## Upgrade "pandoc-thesis" image and setup new container
@@ -212,4 +218,4 @@ $(TMP): tex/__%.filled.tex: tex/%.tex $(META)
 ###############################################################################
 
 
-.PHONY: simple container clean distclean containerclean imageclean
+.PHONY: simple container containerstart containerupgrade clean distclean containerclean imageclean
