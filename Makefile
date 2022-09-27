@@ -129,7 +129,7 @@ PANDOC_FILTERS_REPO     = https://github.com/jgm/pandocfilters.git
 PANDOC_FILTERS_VERSION  = 1beda668a764c8aa8e1c4e0cebce4323d4181f92
 
 PANDOC_IMAGINE_REPO     = https://github.com/andros21/imagine
-PANDOC_IMAGINE_VERSION  = dea560e1da35b1590b07ad5bcdb08535199e61dd
+PANDOC_IMAGINE_VERSION  = 1524710a663294c3ee82aebb8a4ab9bef1e4d4f4
 
 
 
