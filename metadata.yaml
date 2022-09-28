@@ -42,4 +42,10 @@ declarationlabel: Declaration
 # pdf keywords metadata
 keywords: []
 
+# pandoc-filters imagine global
+imagine.gnuplot.im_fmt: tex
+imagine.graphviz.im_fmt: eps
+imagine.plantuml.im_fmt: eps
+imagine.im_out: img
+
 ...

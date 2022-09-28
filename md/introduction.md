@@ -123,7 +123,7 @@ Seite erzeugt wird. Dies ist durchaus beabsichtigt.
 Digital display exbibit a non linear emission behaviour, in relation to characteristic parameter $\gamma$,
 see \ref{fig:gamma}:
 
-```{.gnuplot im_fmt="tex" im_out="img" caption="Different emission responses" label="fig:gamma"}
+```{.gnuplot caption="Different emission responses" label="fig:gamma"}
 set size 0.8,0.8
 set key left top
 set format '$%g$'
@@ -138,7 +138,7 @@ plot [0:1] x with lines t '$\gamma = 1.0$' lt rgb "#ad3434" lw 3.5, \
 
 Internally a generic compiler can be viewed as \ref{fig:compiler}
 
-```{.graphviz im_fmt="eps" im_out="img" caption="General compiler pipe" #fig:compiler}
+```{.graphviz caption="General compiler pipe" #fig:compiler}
 graph "" {
     rankdir="LR";
     source [label="source code" shape=ellipse];
@@ -156,12 +156,13 @@ graph "" {
 }
 ```
 
+\newpage
 
 ## Plantuml
 
 Two web apps behind a dmz see \ref{fig:dmz}
 
-```{.plantuml im_fmt="eps" im_out="img" caption="web01 backend web02 frontend" #fig:dmz}
+```{.plantuml caption="web01 backend web02 frontend" #fig:dmz}
 @startuml
 nwdiag {
   network dmz {
