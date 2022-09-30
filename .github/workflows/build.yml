@@ -33,7 +33,6 @@ jobs:
   apko:
     name: build pandoc-thesis-apko
     needs: changes
-    if: needs.changes.outputs.apko == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -43,6 +42,7 @@ jobs:
       - name: checkout project
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: apko snapshot
+        if: needs.changes.outputs.apko == 'true'
         uses: distroless/actions/apko-snapshot@main
         with:
           config: apko/pandoc-thesis.yaml
@@ -53,7 +53,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
   docker:
     name: build pandoc-thesis
-    if: always()
+    if: |
+      needs.changes.outputs.apko == 'true' || needs.changes.outputs.docker == 'true'
     needs:
       - changes
       - apko
@@ -93,20 +94,17 @@ jobs:
         run: |
           cosign verify ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:master-apko | jq
       - name: login ghcr.io
-        if: needs.changes.outputs.docker == 'true'
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: extract metadata
-        if: needs.changes.outputs.docker == 'true'
         id: meta
         uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: build-and-push pandoc-thesis
-        if: needs.changes.outputs.docker == 'true'
         uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94
         with:
           file: apko/pandoc-thesis.Dockerfile
@@ -114,7 +112,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: cosign pandoc-thesis
-        if: needs.changes.outputs.docker == 'true'
         env:
           COSIGN_EXPERIMENTAL: 1
         run: |
