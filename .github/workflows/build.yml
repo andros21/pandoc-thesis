@@ -5,6 +5,9 @@ name: build pandoc-thesis
   push:
     branches:
       - master
+    paths:
+      - apko/pandoc-thesis.Dockerfile
+      - apko/pandoc-thesis.yaml
 
 env:
   REGISTRY: ghcr.io
