@@ -11,10 +11,33 @@ OCI = ghcr.io/andros21/pandoc-thesis:master
 ## (Defaults to docker)
 CE := $(shell basename `which docker 2>/dev/null ||\
                         which podman 2>/dev/null || echo docker`)
+docker_flags =
+podman_flags = --userns keep-id
+ifeq ($(CE), podman)
+	optional_flags=$(podman_flags)
+else
+	optional_flags=$(docker_flags)
+endif
 
 ## Working directory
 ## In case this doesn't work, set the path manually (use absolute paths).
 WORKDIR  = $(CURDIR)
+
+## User id and group id using stat command
+## In case this doesn't work, set your UID and GID
+UID := $(shell stat . -c %u)
+GID := $(shell stat . -c %g)
+
+## Check OS (supported Linux, Darwin aka Mac)
+## Disable selinux volume mount remap on Mac
+UNAME := $(shell uname -s)
+default_remap =
+selinux_remap = :Z
+ifeq ($(UNAME), Linux)
+	remap=$(selinux_remap)
+else
+	remap=$(default_remap)
+endif
 
 ## Pandoc
 ## (Defaults to docker/podman. To use pandoc and TeX-Live directly, create an
@@ -120,25 +143,14 @@ thesis: simple
 
 ## Create "pandoc-thesis" container with pandoc and TeX-Live
 container:
-ifeq ($(CE), podman)
 	$(CE) create \
 		--env HOME="/pandoc_thesis" \
 		--interactive \
 		--name pandoc-thesis \
 		--network none \
-		--user $(shell id -u):$(shell id -g) \
-		--userns keep-id \
-		--volume $(WORKDIR):/pandoc_thesis:Z $(OCI)
-endif
-ifeq ($(CE), docker)
-	$(CE) create \
-		--env HOME="/pandoc_thesis" \
-		--interactive \
-		--name pandoc-thesis \
-		--network none \
-		--user $(shell stat . -c %u):$(shell stat . -c %g) \
-		--volume $(WORKDIR):/pandoc_thesis:Z $(OCI)
-endif
+		--user $(UID):$(GID) \
+		$(optional_flags) \
+		--volume $(WORKDIR):/pandoc_thesis$(remap) $(OCI)
 
 #######################
 ## Auxiliary targets ##
@@ -154,7 +166,7 @@ $(TMP): tex/__%.filled.tex: tex/%.tex $(META)
 
 ## Start container or advice to setup it
 containerstart:
-	@$(CE) start pandoc-thesis 2> /dev/null \
+	@$(CE) start pandoc-thesis \
 		|| (printf 'Error: no container `pandoc-thesis` found, run `make container` before\n' && exit 1)
 
 ## Upgrade "pandoc-thesis" image and setup new container
