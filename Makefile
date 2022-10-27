@@ -150,7 +150,7 @@ container:
 		--network none \
 		--user $(UID):$(GID) \
 		$(optional_flags) \
-		--volume $(WORKDIR):/pandoc_thesis$(remap) $(OCI)
+		--volume "$(WORKDIR)":/pandoc_thesis$(remap) $(OCI)
 
 #######################
 ## Auxiliary targets ##
