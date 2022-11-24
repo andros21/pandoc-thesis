@@ -25,8 +25,8 @@ WORKDIR  = $(CURDIR)
 
 ## User id and group id using stat command
 ## In case this doesn't work, set your UID and GID
-UID := $(shell stat . -c %u)
-GID := $(shell stat . -c %g)
+UID := $(shell id -u)
+GID := $(shell id -g)
 
 ## Check OS (supported Linux, Darwin aka Mac)
 ## Disable selinux volume mount remap on Mac
