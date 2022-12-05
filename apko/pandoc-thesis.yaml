@@ -19,8 +19,11 @@ contents:
     - pandoc
     - plantuml
     - py3-pip
+    - py3-pygments
     - terminus-font
     - texlive
+    - texmf-dist-formatsextra
+    - texmf-dist-latexextra
     - ttf-dejavu
 
 environment:
@@ -32,7 +35,7 @@ environment:
   PANDOC_FILTERS_REPO: https://github.com/jgm/pandocfilters.git
   PANDOC_FILTERS_VERSION: 1beda668a764c8aa8e1c4e0cebce4323d4181f92
   PANDOC_IMAGINE_REPO: https://github.com/andros21/imagine
-  PANDOC_IMAGINE_VERSION: cc96d54ff4df119182d60e0b51eb86ab9b5866b0
+  PANDOC_IMAGINE_VERSION: 68005281fadecc9bbe58d0426579fc238e2ff6fc
 
 work-dir: /pandoc_thesis
 
