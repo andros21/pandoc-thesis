@@ -109,6 +109,8 @@ OPTIONS  += --listings
 OPTIONS  += -V documentclass=book
 OPTIONS  += -V papersize=a4
 OPTIONS  += -V fontsize=11pt
+## uncomment and edit to change line stretch
+#OPTIONS  += -V linestretch=1.5
 
 OPTIONS  += -V classoption:open=right
 OPTIONS  += -V classoption:twoside=true
