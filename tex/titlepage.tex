@@ -1,7 +1,28 @@
+%% default packages
 \RequirePackage[markcase=used]{scrlayer-scrpage}
-% render inline code when using `` markdown
-% https://github.com/jgm/pandoc/issues/6253
+\RequirePackage{graphicx}
+\RequirePackage[a-1b]{pdfx}
+
+%% pdfx metadata
+\begin{filecontents*}{\jobname.xmpdata}
+\Title{$title$}
+\Author{$authorname$}
+\Keywords{$keywords$}
+\end{filecontents*}
+
+%% import user extra packages/variables
+\input{tex/extra.tex}
+
+%% pandoc + minted
+%% https://github.com/jgm/pandoc/issues/4721
+\RequirePackage[outputdir=build]{minted}
+
+%% render inline code when using `` markdown
+%% https://github.com/jgm/pandoc/issues/6253
 \lstset{basicstyle=\ttfamily}
+
+%% minted listing numbered as lstlisting
+\AtBeginDocument{\counterwithin{listing}{chapter}}
 
 %------------------------------------- Custom Color Setup --------------------------
 \colorlet{darkred}{red!50!black}

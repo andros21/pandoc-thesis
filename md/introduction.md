@@ -44,7 +44,7 @@ können Sie sich die Wirkung der jeweiligen Zitierstile/CSL-Definitionen anschau
 
 ## Source-Code
 
-```{.python caption="The preprocessing step, cf. [@Dietz2018]" #lst:huh}
+```{.python caption="The preprocessing step" label="lst:huh" style=friendly}
 def foo():
   """ Wuppie! """
   pass
@@ -174,3 +174,12 @@ nwdiag {
 }
 @enduml
 ```
+
+## Minted
+
+```{.bash caption="Hello world bash script" label="lst:bash" xleftmargin=20pt,linenos}
+#!/bin/bash
+
+echo "Hello, World!"
+```
+With line numbers enabled and I can reference it too \ref{lst:bash}

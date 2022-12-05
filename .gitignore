@@ -1,4 +1,5 @@
 # generated files
+build/
 pd-images/
 tex/__backmatter.filled.tex
 tex/__frontmatter.filled.tex

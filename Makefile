@@ -80,12 +80,15 @@ TMP  = $(TMP1) $(TMP2) $(TMP3)
 AUX_OPTS  = --wrap=preserve
 
 OPTIONS   = -f markdown
-OPTIONS  += --pdf-engine=pdflatex
+OPTIONS  += --pdf-engine=latexmk
+OPTIONS  += --pdf-engine-opt=-outdir=build
+OPTIONS  += --pdf-engine-opt=--shell-escape
 OPTIONS  += --standalone
 
 OPTIONS  += -M lang=en-EN
 OPTIONS  += --metadata-file=$(META)
 OPTIONS  += --filter pandoc-imagine
+OPTIONS  += --filter pandoc-minted
 
 OPTIONS  += --include-in-header=$(TMP1)
 OPTIONS  += --include-before-body=$(TMP2)
@@ -122,6 +125,9 @@ OPTIONS  += --toc
 OPTIONS  += --toc-depth=3
 OPTIONS  += --number-sections
 
+## default links color
+## set new colors inside `tex/extra.tex`
+## and change with your
 OPTIONS  += -V citecolor=darkred
 OPTIONS  += -V linkcolor=darkred
 OPTIONS  += -V urlcolor=darkblue
@@ -174,7 +180,7 @@ containerupgrade: containerclean imageclean container
 
 ## Clean-up: Remove temporary (generated) files
 clean:
-	rm -rf $(TMP) \?/ .cache/ pd-images/ .java/
+	rm -rf $(TMP) \?/ .cache/ pd-images/ .java/ build/
 
 ## Clean-up: Remove also generated thesis
 distclean: clean
