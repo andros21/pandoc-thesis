@@ -195,11 +195,11 @@ containerupgrade: containerclean imageclean container
 
 ## Clean-up: Remove temporary (generated) files
 clean:
-	rm -rf $(TMP) \?/ .cache/ pd-images/ .java/ build/
+	rm -rf $(TMP) \?/ .cache/ pd-images/ .java/
 
 ## Clean-up: Remove also generated thesis
 distclean: clean
-	rm -f $(TARGET)
+	rm -f $(TARGET) build/
 
 ## Clean-up: Stop and remove "pandoc-thesis" container
 containerclean:
