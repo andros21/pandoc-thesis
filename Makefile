@@ -149,6 +149,8 @@ simple: containerstart $(TARGET)
 thesis: simple
 	xdg-open ${TARGET} > /dev/null 2>&1 &
 
+example: containerstart example.pdf
+
 ## Create "pandoc-thesis" container with pandoc and TeX-Live
 container:
 	$(CE) create \
@@ -167,6 +169,17 @@ container:
 ## Build thesis
 ${TARGET}: $(SRC) $(REFERENCES) $(APPENDIX) $(META) $(BIBFILE) $(TMP)
 	$(PANDOC) ${OPTIONS} -o $@ $(SRC) $(REFERENCES) $(APPENDIX)
+
+## Build example
+SRC_EXAMPLE      = example/introduction.md \
+                   example/relatedwork.md  \
+                   example/concept.md      \
+                   example/realisation.md  \
+                   example/conclusion.md
+BIBFILE_EXAMPLE  = example/references.bib
+APPENDIX_EXAMPLE = example/appendix.md
+example.pdf: $(SRC_EXAMPLE) $(REFERENCES_EXAMPLE) $(APPENDIX_EXAMPLE) $(META) $(BIBFILE_EXAMPLE) $(TMP)
+	$(PANDOC) ${OPTIONS} -M bibliography=$(BIBFILE_EXAMPLE) -o $@ $(SRC_EXAMPLE) $(REFERENCES) $(APPENDIX_EXAMPLE)
 
 ## Build auxiliary files (title page, frontmatter, backmatter, references)
 $(TMP): tex/__%.filled.tex: tex/%.tex $(META)
