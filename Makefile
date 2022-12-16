@@ -199,7 +199,7 @@ clean:
 
 ## Clean-up: Remove also generated thesis
 distclean: clean
-	rm -f $(TARGET) build/
+	rm -fr $(TARGET) build/
 
 ## Clean-up: Stop and remove "pandoc-thesis" container
 containerclean:
