@@ -48,7 +48,7 @@ jobs:
         uses: docker/setup-qemu-action@e81a89b1732b9c48d79cd809d8d81d79c4647a18
       - name: apko snapshot
         if: needs.changes.outputs.apko == 'true'
-        uses: distroless/actions/apko-snapshot@main
+        uses: chainguard-images/actions/apko-snapshot@main
         with:
           config: apko/pandoc-thesis.yaml
           base-tag: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
