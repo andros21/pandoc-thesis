@@ -153,7 +153,8 @@ example: containerstart example.pdf
 
 ## Create "pandoc-thesis" container with pandoc and TeX-Live
 container:
-	$(CE) run -it --detach \
+	$(CE) run \
+		--detach \
 		--env HOME="/pandoc_thesis" \
 		--interactive \
 		--name pandoc-thesis \
