@@ -4,7 +4,7 @@
 
 ## pandoc-thesis official image
 ## Verify its signature before run `make container` ;)
-OCI = ghcr.io/andros21/pandoc-thesis:master
+OCI ?= ghcr.io/andros21/pandoc-thesis:latest
 
 ## Container engine to use
 ## Choose between docker or podman (rootless)
@@ -153,14 +153,23 @@ example: containerstart example.pdf
 
 ## Create "pandoc-thesis" container with pandoc and TeX-Live
 container:
-	$(CE) create \
+	$(CE) run -it --detach \
 		--env HOME="/pandoc_thesis" \
 		--interactive \
 		--name pandoc-thesis \
-		--network none \
 		--user $(UID):$(GID) \
 		$(optional_flags) \
 		--volume "$(WORKDIR)":/pandoc_thesis$(remap) $(OCI)
+	$(CE) exec -u 0 -w /tmp pandoc-thesis sh -c 'curl -sSf $$TEXLIVE_TRIGGER_URL | sh'
+	$(CE) exec -u 0 -w /tmp pandoc-thesis sh -c 'curl -sSf $$JAVA_TRIGGER_URL | sh'
+	$(CE) exec -u 0 -w /tmp pandoc-thesis dot -c
+	$(CE) exec -u 0 -w /tmp pandoc-thesis python3 -m venv --system-site-packages /opt/imagine
+	$(CE) exec -u 0 -w /tmp pandoc-thesis sh -c '/opt/imagine/bin/pip install \
+		--no-cache-dir --disable-pip-version-check \
+		git+$$PANDOC_FILTERS_REPO@$$PANDOC_FILTERS_VERSION'
+	$(CE) exec -u 0 -w /tmp pandoc-thesis sh -c '/opt/imagine/bin/pip install \
+		--no-cache-dir --disable-pip-version-check \
+		git+$$PANDOC_IMAGINE_REPO@$$PANDOC_IMAGINE_VERSION'
 
 #######################
 ## Auxiliary targets ##
