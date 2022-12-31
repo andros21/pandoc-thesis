@@ -6,6 +6,9 @@
 ## Verify its signature before run `make container` ;)
 OCI ?= ghcr.io/andros21/pandoc-thesis:latest
 
+## Container name (from working dir)
+CN := $(shell basename $$PWD)
+
 ## Container engine to use
 ## Choose between docker or podman (rootless)
 ## (Defaults to docker)
@@ -43,7 +46,7 @@ endif
 ## (Defaults to docker/podman. To use pandoc and TeX-Live directly, create an
 ## environment variable `PANDOC` pointing to the location of your
 ## pandoc installation.)
-PANDOC  ?= $(CE) exec pandoc-thesis pandoc
+PANDOC  ?= $(CE) exec $(CN) pandoc
 
 ## Source files
 ## (Adjust to your needs. Order of markdown files in $(SRC) matters!)
@@ -157,18 +160,18 @@ container:
 		--detach \
 		--env HOME="/pandoc_thesis" \
 		--interactive \
-		--name pandoc-thesis \
+		--name $(CN) \
 		--user $(UID):$(GID) \
 		$(optional_flags) \
 		--volume "$(WORKDIR)":/pandoc_thesis$(remap) $(OCI)
-	$(CE) exec -u 0 -w /tmp pandoc-thesis sh -c 'curl -sSf $$TEXLIVE_TRIGGER_URL | sh'
-	$(CE) exec -u 0 -w /tmp pandoc-thesis sh -c 'curl -sSf $$JAVA_TRIGGER_URL | sh'
-	$(CE) exec -u 0 -w /tmp pandoc-thesis dot -c
-	$(CE) exec -u 0 -w /tmp pandoc-thesis python3 -m venv --system-site-packages /opt/imagine
-	$(CE) exec -u 0 -w /tmp pandoc-thesis sh -c '/opt/imagine/bin/pip install \
+	$(CE) exec -u 0 -w /tmp $(CN) sh -c 'curl -sSf $$TEXLIVE_TRIGGER_URL | sh'
+	$(CE) exec -u 0 -w /tmp $(CN) sh -c 'curl -sSf $$JAVA_TRIGGER_URL | sh'
+	$(CE) exec -u 0 -w /tmp $(CN) dot -c
+	$(CE) exec -u 0 -w /tmp $(CN) python3 -m venv --system-site-packages /opt/imagine
+	$(CE) exec -u 0 -w /tmp $(CN) sh -c '/opt/imagine/bin/pip install \
 		--no-cache-dir --disable-pip-version-check \
 		git+$$PANDOC_FILTERS_REPO@$$PANDOC_FILTERS_VERSION'
-	$(CE) exec -u 0 -w /tmp pandoc-thesis sh -c '/opt/imagine/bin/pip install \
+	$(CE) exec -u 0 -w /tmp $(CN) sh -c '/opt/imagine/bin/pip install \
 		--no-cache-dir --disable-pip-version-check \
 		git+$$PANDOC_IMAGINE_REPO@$$PANDOC_IMAGINE_VERSION'
 
@@ -197,8 +200,8 @@ $(TMP): tex/__%.filled.tex: tex/%.tex $(META)
 
 ## Start container or advice to setup it
 containerstart:
-	@$(CE) start pandoc-thesis \
-		|| (printf 'Error: no container `pandoc-thesis` found, run `make container` before\n' && exit 1)
+	@$(CE) start $(CN) \
+		|| (printf 'Error: no container `%s` found, run `make container` before\n' $(CN) && exit 1)
 
 ## Upgrade "pandoc-thesis" image and setup new container
 containerupgrade: containerclean imageclean container
@@ -213,8 +216,8 @@ distclean: clean
 
 ## Clean-up: Stop and remove "pandoc-thesis" container
 containerclean:
-	$(CE) stop pandoc-thesis || exit 0
-	$(CE) rm pandoc-thesis || exit 0
+	$(CE) stop $(CN) || exit 0
+	$(CE) rm $(CN) || exit 0
 
 ## Clean-up: Remove "pandoc-thesis" image
 imageclean:
