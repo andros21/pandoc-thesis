@@ -1,6 +1,5 @@
 <h1> pandoc-thesis <a href="https://github.com/andros21/pandoc-thesis/actions/workflows/build.yml">
     <img src="https://img.shields.io/github/actions/workflow/status/andros21/pandoc-thesis/build.yml?branch=master&label=build&logo=github" alt="build">
-    <img src="https://img.shields.io/github/actions/workflow/status/andros21/pandoc-thesis/e2e.yml?branch=master&event=workflow_dispatch&label=e2e&logo=github" alt="e2e">
 </a>
 </h1>
 
