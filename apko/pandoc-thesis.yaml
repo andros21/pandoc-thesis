@@ -18,8 +18,12 @@ contents:
     - graphviz
     - pandoc
     - plantuml
+    - py3-matplotlib
+    - py3-numpy
+    - py3-pandas
     - py3-pip
     - py3-pygments
+    - py3-yaml
     - terminus-font
     - texlive
     - texmf-dist-formatsextra
@@ -35,7 +39,7 @@ environment:
   PANDOC_FILTERS_REPO: https://github.com/jgm/pandocfilters.git
   PANDOC_FILTERS_VERSION: 1beda668a764c8aa8e1c4e0cebce4323d4181f92
   PANDOC_IMAGINE_REPO: https://github.com/andros21/imagine
-  PANDOC_IMAGINE_VERSION: 68005281fadecc9bbe58d0426579fc238e2ff6fc
+  PANDOC_IMAGINE_VERSION: e28c1c5acbf9ff6333571b7b3a8bebd761621e78
 
 work-dir: /pandoc_thesis
 entrypoint:

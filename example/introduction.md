@@ -183,3 +183,19 @@ nwdiag {
 echo "Hello, World!"
 ```
 With line numbers enabled and I can reference it too \ref{lst:bash}
+
+## Matplotlib
+
+```{.matplotlib caption="Matplotlib pgfplot backend" label="fig:matplotlib"}
+x = np.linspace(0, 10)
+
+fig, ax = plt.subplots()
+for k in np.arange(1, 4):
+   V = np.exp(-k*x)
+   ax.plot(x, V, label=f"V(x)=-{k}x")
+
+ax.set_xlabel('x')
+ax.set_ylabel('p(x)')
+ax.legend()
+```
+And obviously I can reference it too \ref{fig:matplotlib}

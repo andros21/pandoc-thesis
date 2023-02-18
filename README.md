@@ -53,6 +53,7 @@ Inside markdown source is possible to insert code-blocks of these available tool
 * [`gnuplot`](http://www.gnuplot.info/) - a portable command-line driven graphing utility
 * [`graphviz`](https://graphviz.org/) - open source graph visualization software
 * [`plantuml`](https://plantuml.com/) - easily create beautiful uml diagrams from simple text
+* [`matplotlib`](https://matplotlib.org/) - a comprehensive library for creating static plot in python
 
 thanks to [`pandocfilters`](https://github.com/jgm/pandocfilters) and [`imagine`](https://github.com/andros21/imagine) are rendered as image inside final pdf
 

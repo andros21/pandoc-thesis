@@ -46,6 +46,7 @@ keywords: []
 imagine.gnuplot.im_fmt: tex
 imagine.graphviz.im_fmt: eps
 imagine.plantuml.im_fmt: eps
+imagine.matplotlib.im_fmt: tex
 imagine.im_out: img
 
 ...
