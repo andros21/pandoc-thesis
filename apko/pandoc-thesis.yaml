@@ -28,6 +28,7 @@ contents:
     - texlive
     - texmf-dist-formatsextra
     - texmf-dist-latexextra
+    - texmf-dist-pictures
     - ttf-dejavu
 
 environment:
