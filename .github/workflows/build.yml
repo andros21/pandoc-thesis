@@ -18,7 +18,7 @@ jobs:
     name: build pandoc-thesis
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
       packages: write
     steps:
@@ -42,13 +42,16 @@ jobs:
           set -x
           OCI=${{ steps.apko.outputs.digest }} make container
           make example
-      - name: upload example
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
+      - name: prepare html assets
+        run: |
+          set -x
+          mkdir html/
+          mv example.pdf html/
+      - name: publish to gh-pages
+        uses: peaceiris/actions-gh-pages@bd8c6b06eba6b3d25d72b7a1767993c0aeee42e7
         with:
-          name: pandoc-thesis
-          path: example.pdf
-          if-no-files-found: error
-          retention-days: 31
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: html/
       - name: scan vulns
         uses: chainguard-images/actions/vul-scans@main
         with:
