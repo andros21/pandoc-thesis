@@ -16,7 +16,8 @@ A Template for Thesis Documents written in Markdown
     * [`podman`](https://podman.io/) - a daemonless container engine
 * [`make`](https://www.gnu.org/s/make/manual/make.html) command - build automation tool
 
-> **Warning:** supported platforms
+> [!WARNING]\
+> supported platforms
 >  * `amd64-unknown-linux`
 >  * `arm64-unknown-linux`
 >  * `amd64-apple-darwin`
@@ -28,15 +29,18 @@ A Template for Thesis Documents written in Markdown
 * Put the title of your thesis, your name and other meta information in [`metadata.yaml`](metadata.yaml)
 *  Adjust optional definitions in [`metadata.yaml`](metadata.yaml) to your needs:
 
-    > **Note:** want an `abstract` or `acknowledgements` page uncomment and fill them
+    > [!NOTE]\
+    > want an `abstract` or `acknowledgements` page uncomment and fill them
 
 * Fill the markdown files under [`md/`](md) with your content, the default files in the folder [`md/`](md) \
     correspond to a typical structure of a scientific thesis
 
-    > **Hint:** you will find some help regarding the use of Markdown in [`example/introduction.md`](example/introduction.md)\
+    > [!NOTE]\
+    > you will find some help regarding the use of Markdown in [`example/introduction.md`](example/introduction.md)\
     > as well as typical number of pages for each chapter in the comment section of each file
 
-    > **Warning:** do not forget to reflect the changed filenames in [`Makefile`](Makefile)
+    > [!WARNING]\
+    > do not forget to reflect the changed filenames in [`Makefile`](Makefile)
 
 * Create `pandoc-thesis` container with everything you need to build thesis: `make container`
 * Build the thesis: `make`
@@ -46,10 +50,12 @@ A Template for Thesis Documents written in Markdown
     * to remove container: `make containerclean`
     * to remove image: `make imageclean`
 
-> **Note:** the above mentioned files constitute a minimal working example\
-> To start your own project, simply clone this project and customize the files mentioned above.
+> [!NOTE]\
+> the above mentioned files constitute a minimal working example\
+> to start your own project, simply clone this project and customize the files mentioned above
 
-> **Note:** to upgrade to latest `pandoc-thesis` image `make containerupgrade`
+> [!NOTE]\
+> to upgrade to latest `pandoc-thesis` image `make containerupgrade`
 
 ### Pandoc filters
 
@@ -61,13 +67,16 @@ Inside markdown source is possible to insert code-blocks of these available tool
 
 thanks to [`pandocfilters`](https://github.com/jgm/pandocfilters) and [`imagine`](https://github.com/andros21/imagine) are rendered as image inside final pdf
 
-> **Hint:** there is a special section inside [`example/introduction.md`](example/introduction.md)\
+> [!NOTE]\
+> there is a special section inside [`example/introduction.md`](example/introduction.md)\
 > for better understanding how it work and how to use it
 
-> **Note:** `imagine` global configuration inside [`metadata.yaml`](metadata.yaml) or\
+> [!NOTE]\
+> `imagine` global configuration inside [`metadata.yaml`](metadata.yaml) or\
 > config per block inside code-block header
 
-> **Note:** `gnuplot` global configuration inside [`.gnuplot`](.gnuplot) loaded at startup
+> [!NOTE]\
+> `gnuplot` global configuration inside [`.gnuplot`](.gnuplot) loaded at startup
 
 ### Acknowledgements
 
