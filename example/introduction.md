@@ -44,7 +44,7 @@ können Sie sich die Wirkung der jeweiligen Zitierstile/CSL-Definitionen anschau
 
 ## Source-Code
 
-```{.python caption="The preprocessing step" label="lst:huh" style=friendly}
+```{.python caption="The preprocessing step" #lst:huh style=friendly}
 def foo():
   """ Wuppie! """
   pass
@@ -123,7 +123,7 @@ Seite erzeugt wird. Dies ist durchaus beabsichtigt.
 Digital display exbibit a non linear emission behaviour, in relation to characteristic parameter $\gamma$,
 see \ref{fig:gamma}:
 
-```{.gnuplot caption="Different emission responses" label="fig:gamma"}
+```{.gnuplot caption="Different emission responses" #fig:gamma}
 set size 0.8,0.8
 set key left top
 set format '$%g$'
@@ -177,7 +177,7 @@ nwdiag {
 
 ## Minted
 
-```{.bash caption="Hello world bash script" label="lst:bash" xleftmargin=20pt,linenos}
+```{.bash caption="Hello world bash script" #lst:bash xleftmargin=20pt,linenos}
 #!/bin/bash
 
 echo "Hello, World!"
@@ -186,7 +186,7 @@ With line numbers enabled and I can reference it too \ref{lst:bash}
 
 ## Matplotlib
 
-```{.matplotlib caption="Matplotlib pgfplot backend" label="fig:matplotlib"}
+```{.matplotlib caption="Matplotlib pgfplot backend" #fig:matplotlib}
 x = np.linspace(0, 10)
 
 fig, ax = plt.subplots()
