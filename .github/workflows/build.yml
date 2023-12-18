@@ -61,7 +61,7 @@ jobs:
           set -x
           CE=${{ matrix.ce }} OCI=${{ needs.apko.outputs.digest }} make container
           CE=${{ matrix.ce }} make example
-      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
+      - uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392
         if: matrix.ce == 'docker'
         with:
           name: pandoc-thesis-example
